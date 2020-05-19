@@ -59,6 +59,11 @@ state = {
 ## Setup Redux (1)
 
 - Setup the redux store
+  - `createStore()`
+  - `reducer` with initialState
+  - export your `store`
+  - use the Provider in index.js
+  - test: Redux DevTools
 
 ## Make Components:
 
@@ -86,7 +91,7 @@ state = {
 - Go with the flow (don't miss steps by being all over the place)
 
   - hardcode some information
-  - put the information in your component using a selector
+  - put the information in your component using a `selector`
   - display the info
   - make some event listeners so the user can interact
   - dispatch an action
@@ -114,6 +119,7 @@ state = {
 - create folder `src/store`, place an `index.js` in it
 
   ```js
+  // src/store/index.js
   import { createStore } from "redux";
   import reducer from "./reducer"; //we didn't create this yet
 
@@ -123,3 +129,74 @@ state = {
   ```
 
 - add the importer reducer in `src/store/reducer.jss`
+
+  ```js
+  // src/store/reducer.js
+  const initialState = {
+    user: {
+      name: "Helva",
+    },
+    pizzas: [
+      {
+        id: 161235,
+        name: "Pizza Margherita",
+        description:
+          "The typical Neapolitan pizza, made with San Marzano tomatoes, mozzarella cheese, fresh basil, salt and extra-virgin olive oil.",
+        bought: 5,
+      },
+    ],
+  };
+
+  export default function reducer(state = initialState, action) {
+    switch (action.type) {
+      case "ADD_PIZZA": {
+        // => Ask yourself: what is action.payload?
+        return {
+          ...state,
+          pizzas: [
+            ...state.pizzas,
+            {
+              id: action.payload.id,
+              name: action.payload.name,
+              description: action.payload.description,
+              bought: 0,
+            },
+          ],
+        };
+      }
+      default: {
+        return state;
+      }
+    }
+  }
+  ```
+
+- make the redux store available everywhere in the app with the `provider` component
+
+  ```js
+  import { Provider } from "react-redux";
+  import store from "./store";
+
+  ReactDOM.render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.getElementById("root")
+  );
+  ```
+
+- **Redux DevTools**
+
+  connect your store with the devtools by adjusting `store/index.js`:
+
+  ```js
+  const enhancer =
+    window.__REDUX_DEVTOOLS_EXTENSION__ &&
+    window.__REDUX_DEVTOOLS_EXTENSION__();
+
+  const store = createStore(reducer, enhancer);
+  ```
+
+  this makes the store visible in the browser
+
+- run the app `npm run start`
