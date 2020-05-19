@@ -7,7 +7,11 @@ function selectUser(reduxState) {
 }
 
 function selectPizzas(reduxState) {
-  return reduxState.pizzas;
+  return [
+    ...reduxState.pizzas.sort((pizzaA, pizzaB) => {
+      return pizzaB.bought - pizzaA.bought;
+    }),
+  ];
 }
 
 export default function PizzaList() {
@@ -22,7 +26,9 @@ export default function PizzaList() {
         {pizzas.map((pizza) => {
           return (
             <li key={pizza.id}>
-              <h3>{pizza.name}</h3>
+              <h3>
+                {pizza.name} ({pizza.bought})
+              </h3>
               <p>{pizza.description}</p>
             </li>
           );

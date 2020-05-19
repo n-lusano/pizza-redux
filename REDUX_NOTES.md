@@ -30,26 +30,6 @@
   - when given the global Redux state object, selects some data from it
   - `useSelector` for getting information from the state, to your component
 
-    ```js
-    //src/components/PizzaList.js
-    import { useSelector } from "react-redux";
-
-    function selectUser(reduxState) {
-      console.log("State in selector", reduxState);
-      return reduxState.user;
-    }
-
-    export default function PizzaList() {
-      const user = useSelector(selectUser);
-      console.log("User in component", user);
-      return (
-        <div>
-          <h1>Hello {user.name}</h1>
-        </div>
-      );
-    }
-    ```
-
 #### React & Redux
 
 react-redux: integrates react and redux
@@ -99,7 +79,10 @@ state = {
 
 ## Get the data from the redux store, and use it in the components
 
-- `useSelector`
+- import `useSelector`
+- write a selector function (returns part of the state)
+- pass your selector into useSelector
+- display data
 
 ## Implement behaviour
 
@@ -233,3 +216,25 @@ state = {
 - create folder `src/components`, place an `PizzaList.js` in it
 
   (export/import in App.js etc etc)
+
+- import `useSelector` for getting information from the state, to your component
+
+  ```js
+  //src/components/PizzaList.js
+  import { useSelector } from "react-redux";
+
+  function selectUser(reduxState) {
+    console.log("State in selector", reduxState);
+    return reduxState.user;
+  }
+
+  export default function PizzaList() {
+    const user = useSelector(selectUser);
+    console.log("User in component", user);
+    return (
+      <div>
+        <h1>Hello {user.name}</h1>
+      </div>
+    );
+  }
+  ```
