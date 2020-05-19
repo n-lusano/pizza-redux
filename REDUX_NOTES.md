@@ -22,7 +22,33 @@
   - returns a new state
 
 - `store.getState()` to get the current state of the store
-- in React we use `UseSelector` to get state
+- in React we use `useSelector` to get stat <span style="font-size:2em;">&darr;</span>
+
+- Selector:
+
+  - (**pure**) function
+  - when given the global Redux state object, selects some data from it
+  - `useSelector` for getting information from the state, to your component
+
+    ```js
+    //src/components/PizzaList.js
+    import { useSelector } from "react-redux";
+
+    function selectUser(reduxState) {
+      console.log("State in selector", reduxState);
+      return reduxState.user;
+    }
+
+    export default function PizzaList() {
+      const user = useSelector(selectUser);
+      console.log("User in component", user);
+      return (
+        <div>
+          <h1>Hello {user.name}</h1>
+        </div>
+      );
+    }
+    ```
 
 #### React & Redux
 
@@ -65,7 +91,7 @@ state = {
   - use the Provider in index.js
   - test: Redux DevTools
 
-## Make Components:
+## Make Components: (2)
 
 - Profile
 - PizzaCard
@@ -106,7 +132,7 @@ state = {
 
 ## **STEPS**:
 
-(1)
+**(1) Setup store**
 
 - create react app
 
@@ -140,8 +166,7 @@ state = {
       {
         id: 161235,
         name: "Pizza Margherita",
-        description:
-          "The typical Neapolitan pizza, made with San Marzano tomatoes, mozzarella cheese, fresh basil, salt and extra-virgin olive oil.",
+        description: "The typical Neapolitan pizza, etc",
         bought: 5,
       },
     ],
@@ -174,6 +199,7 @@ state = {
 - make the redux store available everywhere in the app with the `provider` component
 
   ```js
+  //src/index.js
   import { Provider } from "react-redux";
   import store from "./store";
 
@@ -190,6 +216,7 @@ state = {
   connect your store with the devtools by adjusting `store/index.js`:
 
   ```js
+  //src/store/index.js:
   const enhancer =
     window.__REDUX_DEVTOOLS_EXTENSION__ &&
     window.__REDUX_DEVTOOLS_EXTENSION__();
@@ -200,3 +227,9 @@ state = {
   this makes the store visible in the browser
 
 - run the app `npm run start`
+
+**(2) Make components**
+
+- create folder `src/components`, place an `PizzaList.js` in it
+
+  (export/import in App.js etc etc)
